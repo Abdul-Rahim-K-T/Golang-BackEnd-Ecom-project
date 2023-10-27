@@ -1,0 +1,1362 @@
+definitions:
+  controllers.ApplyCouponRequest:
+    properties:
+      couponcode:
+        type: string
+    required:
+    - couponcode
+    type: object
+  controllers.brands:
+    properties:
+      brandName:
+        type: string
+    type: object
+  controllers.categoryoffers:
+    properties:
+      categoryid:
+        type: integer
+      percentage:
+        type: integer
+    type: object
+  controllers.coupons:
+    properties:
+      couponcode:
+        type: string
+      days:
+        type: integer
+      maxdiscount:
+        type: integer
+      mindiscount:
+        type: integer
+      type:
+        type: string
+      value:
+        type: integer
+    type: object
+  controllers.datas:
+    properties:
+      productid:
+        type: integer
+    type: object
+  controllers.inputDatas:
+    properties:
+      newemail:
+        type: string
+      newfirstname:
+        type: string
+      newphone:
+        type: string
+      newsecondname:
+        type: string
+      newusername:
+        type: string
+    type: object
+  controllers.product:
+    properties:
+      id:
+        type: integer
+      newdescription:
+        type: string
+      newname:
+        type: string
+      newprice:
+        type: integer
+      newstock:
+        type: integer
+    type: object
+  controllers.userDetail:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  controllers.userInputs:
+    properties:
+      newpassword:
+        type: string
+      oldpassword:
+        type: string
+    type: object
+  controllers.validatdata:
+    properties:
+      email:
+        type: string
+      otp:
+        type: integer
+    type: object
+  models.Order:
+    properties:
+      addressid:
+        type: integer
+      orderid:
+        type: integer
+      paymentid:
+        type: integer
+      status:
+        type: string
+      totalprice:
+        type: integer
+      userid:
+        type: integer
+    type: object
+  models.Product:
+    type: object
+  models.User:
+    properties:
+      createdat:
+        type: string
+      email:
+        type: string
+      firstname:
+        maxLength: 20
+        minLength: 5
+        type: string
+      isblocked:
+        type: boolean
+      lastname:
+        minLength: 3
+        type: string
+      otp:
+        type: integer
+      password:
+        maxLength: 20
+        minLength: 5
+        type: string
+      phonenumber:
+        type: string
+      referalcode:
+        type: string
+      userid:
+        type: integer
+      username:
+        maxLength: 20
+        minLength: 5
+        type: string
+      validate:
+        type: boolean
+      wallet:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  title: Ecom API
+  version: "1.0"
+paths:
+  /admin/addcoupon:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new coupon with the specified attributes.
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Coupon details
+        in: body
+        name: coupon
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.coupons'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: json
+        "400":
+          description: Bad Request
+          schema:
+            type: json
+      security:
+      - ApiKeyAuth: []
+      summary: Create a new coupon
+      tags:
+      - coupons
+  /admin/addimage:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Uploads one or more images for a product and associates them with
+        the product in the database.
+      parameters:
+      - description: Product ID to associate images with
+        in: formData
+        name: product_id
+        required: true
+        type: integer
+      - description: One or more image files to upload
+        in: formData
+        name: files
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Upload product images
+      tags:
+      - products
+  /admin/addproduct:
+    post:
+      consumes:
+      - application/json
+      description: Adds a new product to the database.
+      parameters:
+      - description: Product information
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/models.Product'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: json
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Add a new product
+      tags:
+      - products
+  /admin/brands:
+    post:
+      description: Create a new brand with the specified name.
+      parameters:
+      - description: Brand name to be created
+        in: body
+        name: brand
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.brands'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully created brand
+          schema:
+            type: json
+        "400":
+          description: Error message
+          schema:
+            type: json
+      summary: Create a new brand.
+      tags:
+      - Brands
+  /admin/cancelcoupon/{coupon_id}:
+    put:
+      description: Cancels a coupon by marking it as canceled and updating the ending
+        time.
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Coupon ID to cancel
+        in: path
+        name: coupon_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: json
+        "400":
+          description: Bad Request
+          schema:
+            type: json
+      security:
+      - ApiKeyAuth: []
+      summary: Cancel a coupon by ID
+      tags:
+      - coupons
+  /admin/categoryoffers:
+    post:
+      consumes:
+      - application/json
+      description: Add an offer to a category by its ID
+      parameters:
+      - description: Category ID and Percentage for the offer
+        in: body
+        name: categoryid
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.categoryoffers'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully added an offer to a category
+          schema:
+            type: json
+        "400":
+          description: Error in adding category offer
+          schema:
+            type: json
+      summary: Add an offer to a category
+      tags:
+      - CategoryOffers
+  /admin/categoryoffers/{offer_id}:
+    put:
+      consumes:
+      - application/json
+      description: Cancel an offer by its ID
+      parameters:
+      - description: Offer ID to cancel
+        in: path
+        name: offer_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully cancelled an offer
+          schema:
+            type: json
+        "400":
+          description: Error in cancelling offer
+          schema:
+            type: json
+      summary: Cancel an offer by ID
+      tags:
+      - CategoryOffers
+  /admin/dashboard:
+    get:
+      description: Provides an overview of the admin's dashboard data, including recent
+        sales, total sales, and product counts for the last 30 days.
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: json
+        "400":
+          description: Bad Request
+          schema:
+            type: json
+      security:
+      - ApiKeyAuth: []
+      summary: Get admin dashboard data
+      tags:
+      - admin
+  /admin/deleteproduct/{product_id}:
+    post:
+      consumes:
+      - application/json
+      description: Deletes a product from the database by its ID.
+      parameters:
+      - description: Product ID to delete
+        in: path
+        name: product_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      tags:
+      - products
+  /admin/editimage:
+    put:
+      consumes:
+      - multipart/form-data
+      description: Updates an existing image for a product in the database.
+      parameters:
+      - description: Image ID to update
+        in: formData
+        name: image_id
+        required: true
+        type: integer
+      - description: New Product Image file to upload
+        in: formData
+        name: Files
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Update Product Image
+      tags:
+      - products
+  /admin/editproduct:
+    put:
+      consumes:
+      - application/json
+      description: Updates an existing product in the database.
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Product details to update
+        in: body
+        name: productdetails
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.product'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Update an existing product
+      tags:
+      - products
+  /admin/listcoupons:
+    get:
+      description: Retrieves a list of all available coupons.
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: json
+        "500":
+          description: Internal Server Error
+          schema:
+            type: json
+      security:
+      - ApiKeyAuth: []
+      summary: Retrieve a list of coupons
+      tags:
+      - coupons
+  /admin/salesreport:
+    get:
+      consumes:
+      - application/json
+      description: Generates a sales report within a specified date range and exports
+        it to an Excel file.
+      parameters:
+      - description: Starting date in the format YYYY-MM-DD
+        in: query
+        name: startingdate
+        required: true
+        type: string
+      - description: Ending date in the format YYYY-MM-DD
+        in: query
+        name: endingdate
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Sales report generated successfully
+          schema:
+            type: html
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Generate Sales Report
+      tags:
+      - reports
+  /admin/salesreport/pdf:
+    get:
+      description: Allows users to download the sales report PDF file as an attachment.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: salesreport.pdf
+          schema:
+            type: file
+        "404":
+          description: File not found" (when the PDF file is not found)
+          schema:
+            type: json
+        "500":
+          description: Internal server error" (for other errors)
+          schema:
+            type: json
+      summary: Download Sales Report PDF File
+      tags:
+      - reports
+  /admin/salesreport/xlsx:
+    get:
+      description: Allows users to download the sales report Excel file as an attachment.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: salesreport.xlsx
+          schema:
+            type: file
+        "404":
+          description: File not found" (when the Excel file is not found)
+          schema:
+            type: json
+        "500":
+          description: Internal server error" (for other errors)
+          schema:
+            type: json
+      summary: Download Sales Report Excel File
+      tags:
+      - reports
+  /user/addtowishlist:
+    post:
+      consumes:
+      - application/json
+      description: Allows the authenticated user to add a product to their wishlist.
+      operationId: AddToWishlist
+      parameters:
+      - description: Product ID
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.datas'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Product successfully added to wishlist.
+          schema:
+            type: json
+        "400":
+          description: Invalid input or product error
+          schema:
+            type: json
+      security:
+      - Bearer: []
+      summary: Add to Wishlist
+  /user/applycoupon:
+    post:
+      consumes:
+      - application/json
+      description: Apply a coupon to the user's cart and calculate discounts based
+        on the coupon type
+      parameters:
+      - description: Coupon code to apply to the cart
+        in: body
+        name: couponcode
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.ApplyCouponRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Coupon applied successfully
+          schema:
+            type: json
+        "400":
+          description: Error in applying the coupon
+          schema:
+            type: json
+      summary: Apply a coupon to the user's cart
+      tags:
+      - Coupons
+  /user/ascendingfilter:
+    get:
+      description: Retrieves a list of products sorted in ascending order of their
+        prices.
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: json
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Sort products by ascending price
+      tags:
+      - products
+  /user/brandfilter:
+    get:
+      description: Retrieves a list of products associated with the specified brand
+        name.
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Brand name to filter by
+        in: query
+        name: brand_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: json
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Filter products by brand name
+      tags:
+      - products
+  /user/cancelorder/{order_id}:
+    put:
+      description: Cancel an order with a specific order ID for the authenticated
+        user.
+      operationId: CancelOrderWithId
+      parameters:
+      - description: Order ID to cancel
+        in: path
+        name: order_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: json
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Cancel Order
+  /user/changepassword:
+    post:
+      consumes:
+      - application/json
+      description: Change the user's password with a new one.
+      parameters:
+      - description: Old and New Passwords
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.userInputs'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Change Password
+      tags:
+      - users
+  /user/checkoutcod:
+    post:
+      consumes:
+      - application/json
+      description: Process a cash-on-delivery (COD) order and create payment, order,
+        and order items
+      parameters:
+      - description: Order object with Address_ID
+        in: body
+        name: order
+        required: true
+        schema:
+          $ref: '#/definitions/models.Order'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully placed the order
+          schema:
+            type: json
+        "400":
+          description: Error in processing the order
+          schema:
+            type: json
+      summary: Process a COD order
+      tags:
+      - Orders
+  /user/createinvoice:
+    get:
+      description: Generates a PDF invoice for a specific order and user, and saves
+        it as "public/invoice.pdf".
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Order ID for which the invoice should be generated
+        in: query
+        name: order_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: files
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Generate a PDF invoice
+      tags:
+      - orders
+  /user/deletefromcart/:cart_id:
+    delete:
+      description: Delete a product from the user's cart by specifying the cart item
+        ID.
+      parameters:
+      - description: Cart Item ID
+        in: path
+        name: cart_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully deleted from cart
+          schema:
+            type: json
+        "400":
+          description: Error message
+          schema:
+            type: json
+      summary: Delete a product from the user's cart.
+      tags:
+      - Cart
+  /user/downloadinvoice:
+    get:
+      description: Allows users to download the previously generated PDF invoice.
+      parameters:
+      - description: Bearer Token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: PDF invoice file for download
+          schema:
+            type: file
+        "404":
+          description: Invoice not found
+      security:
+      - ApiKeyAuth: []
+      summary: Download the PDF invoice
+      tags:
+      - invoice
+  /user/listorderdescasc:
+    get:
+      description: Retrieve a list of orders for the authenticated user with optional
+        sorting.
+      operationId: ListOrdersdescasc
+      parameters:
+      - description: Page number for pagination
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Number of items per page
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: Sort order (asc or desc)
+        in: query
+        name: sort
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: json
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: List Orders with Sorting
+  /user/listorders:
+    get:
+      description: Retrieve a list of orders for the authenticated user.
+      operationId: ListOrders
+      parameters:
+      - description: Page number for pagination
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Number of items per page
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: json
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: List Orders
+  /user/listorderswithbrand:
+    get:
+      description: Retrieve a list of orders for the authenticated user with a specific
+        brand name.
+      operationId: ListOrdersWithBrand
+      parameters:
+      - description: Partial brand name to filter by
+        in: query
+        name: brandname
+        required: true
+        type: string
+      - description: Page number for pagination
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Number of items per page
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: json
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: List Orders by Brand
+  /user/listorderswithcatagory:
+    get:
+      description: Retrieve a list of orders for the authenticated user with a specific
+        category name.
+      operationId: ListOrdersWithCategory
+      parameters:
+      - description: Partial category name to filter by
+        in: query
+        name: categoryname
+        required: true
+        type: string
+      - description: Page number for pagination
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Number of items per page
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of orders
+          schema:
+            type: json
+        "400":
+          description: Error while fetching orders
+          schema:
+            type: json
+      security:
+      - ApiKeyAuth: []
+      summary: List Orders by Category
+  /user/listproducts:
+    get:
+      description: Get a paginated list of products including product name, description,
+        stock, price, brand name, and image.
+      parameters:
+      - description: Page number for pagination (1-based)
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Number of products to return per page
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: json
+        "400":
+          description: Invalid page or limit values
+          schema:
+            type: json
+        "404":
+          description: No products found
+          schema:
+            type: json
+      summary: List Products
+      tags:
+      - products
+  /user/listproductsquery:
+    get:
+      description: Get details of a product including its name, price, stock, and
+        description.
+      parameters:
+      - description: Name of the product to retrieve details for
+        in: query
+        name: product_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Product details
+          schema:
+            type: json
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Get Product Details
+      tags:
+      - products
+  /user/listwishlist/{page}:
+    get:
+      description: Retrieves the authenticated user's wishlist items.
+      operationId: ListWishlist
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Wishlist items
+          schema:
+            type: json
+        "400":
+          description: Database error or no products found in wishlist
+          schema:
+            type: json
+      security:
+      - Bearer: []
+      summary: List Wishlist
+  /user/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate a user by verifying their username and password.
+      parameters:
+      - description: User credentials (Username and Password)
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.userDetail'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Login successful
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: User Login
+      tags:
+      - users login
+  /user/logout:
+    post:
+      description: Log out the currently authenticated user by clearing the JWT token
+        cookie.
+      responses:
+        "200":
+          description: Logout successful
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: User Logout
+      tags:
+      - users login
+  /user/payment/success:
+    get:
+      description: Processes a successful RazorPay payment and creates an order.
+      operationId: RazorPaySuccess
+      parameters:
+      - description: Order ID
+        in: query
+        name: order_id
+        required: true
+        type: string
+      - description: Payment ID
+        in: query
+        name: payment_id
+        required: true
+        type: string
+      - description: Payment Signature
+        in: query
+        name: signature
+        required: true
+        type: string
+      - description: Total Amount Paid
+        in: query
+        name: total
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Payment processed successfully
+          schema:
+            type: json
+        "400":
+          description: Error while processing payment
+          schema:
+            type: json
+      security:
+      - ApiKeyAuth: []
+      summary: Process RazorPay Success
+  /user/razorpay:
+    get:
+      description: Initiates a payment process through Razorpay for the authenticated
+        user.
+      operationId: RazorPay
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: RazorPay payment page
+          schema:
+            type: json
+        "400":
+          description: Error while initiating RazorPay payment
+          schema:
+            type: json
+      security:
+      - ApiKeyAuth: []
+      summary: Initiate RazorPay Payment
+  /user/signup:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user with the provided information.
+      parameters:
+      - description: User registration information
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User registration successful
+          schema:
+            type: string
+        "400":
+          description: Bad request
+          schema:
+            type: string
+        "409":
+          description: Conflict - Username or phone number already exists
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Register a new user
+      tags:
+      - users login
+  /user/signup/validate:
+    post:
+      consumes:
+      - application/json
+      description: Validate the OTP received via email during user registration.
+      parameters:
+      - description: Email and OTP to validate
+        in: body
+        name: validate
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.validatdata'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Account validation successful
+          schema:
+            type: string
+        "400":
+          description: Bad request
+          schema:
+            type: string
+        "404":
+          description: User not found or OTP doesn't match
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Validate OTP
+      tags:
+      - users login
+  /user/success:
+    get:
+      description: Displays a success page after payment completion.
+      operationId: Success
+      parameters:
+      - description: Payment ID
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - text/html
+      responses:
+        "200":
+          description: Payment success page
+          schema:
+            type: json
+        "400":
+          description: Error while displaying success page
+          schema:
+            type: json
+      summary: Payment Success
+  /user/updateprofile:
+    post:
+      consumes:
+      - application/json
+      description: Update the user's profile with new information.
+      parameters:
+      - description: New Profile Information
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.inputDatas'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Update Profile
+      tags:
+      - users
+  /user/userdetail:
+    get:
+      description: Get details of the authenticated user including first name, last
+        name, username, email, phone number, and wallet balance.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: json
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Get User Details
+      tags:
+      - users
+  /user/viewcart:
+    get:
+      description: Get the list of products in the user's shopping cart.
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of cart items and total price
+          schema:
+            type: json
+        "400":
+          description: Error message
+          schema:
+            type: json
+      security:
+      - ApiKeyAuth: []
+      summary: Retrieve the user's shopping cart items.
+      tags:
+      - Cart
+  /user/wishlist/addtocart:
+    post:
+      consumes:
+      - application/json
+      description: Adds a product from the user's wishlist to the cart.
+      operationId: AddToCartFromWishlist
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Products successfully added to the cart
+          schema:
+            type: json
+        "400":
+          description: Database or product error
+          schema:
+            type: json
+      security:
+      - Bearer: []
+      summary: Add to Cart from Wishlist
+  /user/wishlist/delete/{wishlist_id}:
+    delete:
+      description: Removes a product from the user's wishlist.
+      operationId: RemoveFromWishlist
+      parameters:
+      - description: Wishlist item ID
+        in: path
+        name: wishlist_id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: Product successfully removed from wishlist.
+          schema:
+            type: json
+        "400":
+          description: Integer conversion error or failed to find in wishlist
+          schema:
+            type: json
+      security:
+      - Bearer: []
+      summary: Remove from Wishlist
+swagger: "2.0"
