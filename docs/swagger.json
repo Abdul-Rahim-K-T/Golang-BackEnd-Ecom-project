@@ -852,7 +852,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "users"
+                    "profile"
                 ],
                 "summary": "Change Password",
                 "parameters": [
@@ -898,7 +898,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Orders"
+                    "COD"
                 ],
                 "summary": "Process a COD order",
                 "parameters": [
@@ -1458,6 +1458,9 @@
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "razor pay"
+                ],
                 "summary": "Process RazorPay Success",
                 "operationId": "RazorPaySuccess",
                 "parameters": [
@@ -1516,6 +1519,9 @@
                 "description": "Initiates a payment process through Razorpay for the authenticated user.",
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "razor pay"
                 ],
                 "summary": "Initiate RazorPay Payment",
                 "operationId": "RazorPay",
@@ -1645,6 +1651,9 @@
                 "produces": [
                     "text/html"
                 ],
+                "tags": [
+                    "razor pay"
+                ],
                 "summary": "Payment Success",
                 "operationId": "Success",
                 "parameters": [
@@ -1687,7 +1696,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "users"
+                    "profile"
                 ],
                 "summary": "Update Profile",
                 "parameters": [
@@ -1735,7 +1744,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "users"
+                    "profile"
                 ],
                 "summary": "Get User Details",
                 "responses": {

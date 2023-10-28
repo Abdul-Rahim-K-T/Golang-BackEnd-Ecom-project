@@ -16,6 +16,7 @@ import (
 // RazorPay initiates a payment process through Razorpay.
 // @Summary Initiate RazorPay Payment
 // @Description Initiates a payment process through Razorpay for the authenticated user.
+// @Tags razor pay
 // @ID RazorPay
 // @Produce json
 // @Security ApiKeyAuth
@@ -91,6 +92,7 @@ func RazorPay(c *gin.Context) {
 // RazorPaySuccess processes a successful RazorPay payment and creates an order.
 // @Summary Process RazorPay Success
 // @Description Processes a successful RazorPay payment and creates an order.
+// @Tags razor pay
 // @ID RazorPaySuccess
 // @Produce json
 // @Param order_id query string true "Order ID"
@@ -253,6 +255,7 @@ func RazorPaySuccess(c *gin.Context) {
 // Success displays a success page after payment completion.
 // @Summary Payment Success
 // @Description Displays a success page after payment completion.
+// @Tags razor pay
 // @ID Success
 // @Produce html
 // @Param id query int true "Payment ID"

@@ -718,7 +718,7 @@ paths:
       - ApiKeyAuth: []
       summary: Change Password
       tags:
-      - users
+      - profile
   /user/checkoutcod:
     post:
       consumes:
@@ -745,7 +745,7 @@ paths:
             type: json
       summary: Process a COD order
       tags:
-      - Orders
+      - COD
   /user/createinvoice:
     get:
       description: Generates a PDF invoice for a specific order and user, and saves
@@ -1128,6 +1128,8 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Process RazorPay Success
+      tags:
+      - razor pay
   /user/razorpay:
     get:
       description: Initiates a payment process through Razorpay for the authenticated
@@ -1147,6 +1149,8 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: Initiate RazorPay Payment
+      tags:
+      - razor pay
   /user/signup:
     post:
       consumes:
@@ -1237,6 +1241,8 @@ paths:
           schema:
             type: json
       summary: Payment Success
+      tags:
+      - razor pay
   /user/updateprofile:
     post:
       consumes:
@@ -1268,7 +1274,7 @@ paths:
       - ApiKeyAuth: []
       summary: Update Profile
       tags:
-      - users
+      - profile
   /user/userdetail:
     get:
       description: Get details of the authenticated user including first name, last
@@ -1288,7 +1294,7 @@ paths:
       - ApiKeyAuth: []
       summary: Get User Details
       tags:
-      - users
+      - profile
   /user/viewcart:
     get:
       description: Get the list of products in the user's shopping cart.

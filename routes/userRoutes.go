@@ -70,7 +70,8 @@ func UserRoutes(r *gin.Engine) {
 		router.GET("/listwishlist/:page", middleware.UserAuth, controllers.ListWishlist)
 		router.POST("/wishlist/addtocart", middleware.UserAuth, controllers.AddToCartFromWishlist)
 		router.POST("/wishlist/delete/:wishlist_id", middleware.UserAuth, controllers.RemoveFromWishlist)
-
+    
+		//INVOICE
 		router.GET("/createinvoice",middleware.UserAuth,controllers.GeneratePdf)
 		router.GET("/downloadinvoice",middleware.UserAuth,controllers.DownloadInvoice)
 	}

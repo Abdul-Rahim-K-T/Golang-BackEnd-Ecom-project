@@ -67,7 +67,7 @@ func AdminLogin(c *gin.Context) {
 
 // @Summary List all users
 // @Description List all users in the system
-// @Tags Users
+// @Tags Usermanagement
 // @Produce json
 // @Success 200 {json} []User "List of users"
 // @Failure 400 {json} ErrorResponse "Error message"
@@ -118,7 +118,7 @@ func AdminLogout(c *gin.Context) {
 
 // @Summary Block a user
 // @Description Block a user by their user ID
-// @Tags Users
+// @Tags Usermanagement
 // @Produce json
 // @Param user_id path int true "User ID to be blocked"
 // @Success 200 {json} SuccessResponse "Successfully blocked user"
@@ -169,7 +169,7 @@ func BlockUser(c *gin.Context) {
 
 // @Summary Unblock a user
 // @Description Unblock a user by their user ID
-// @Tags Users
+// @Tags Usermanagement
 // @Produce json
 // @Param user_id path int true "User ID to be unblocked"
 // @Success 200 {json} SuccessResponse "Successfully unblocked user"

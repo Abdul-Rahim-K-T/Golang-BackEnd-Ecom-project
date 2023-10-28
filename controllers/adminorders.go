@@ -12,7 +12,7 @@ import (
 // ViewOrders lists orders with pagination.
 // @Summary List orders with pagination.
 // @Description List orders with pagination, specifying the page and limit.
-// @Tags Orders
+// @Tags ORDER MANAGEMENT
 // @Produce json
 // @Param page query int true "Page number for pagination"
 // @Param limit query int true "Number of items per page"
@@ -71,7 +71,7 @@ func ViewOrders(c *gin.Context) {
 
 // @Summary Cancel an order.
 // @Description Cancel an order by its order ID.
-// @Tags Orders
+// @Tags ORDER MANAGEMENT
 // @Produce json
 // @Param order_id path int true "Order ID to be canceled"
 // @Success 200 {json} SuccessResponse "Successfully canceled order"
@@ -148,7 +148,7 @@ type data struct {
 
 // @Summary Change the status of an order.
 // @Description Change the status of an order by its order ID, providing the new status.
-// @Tags Orders
+// @Tags ORDER MANAGEMENT
 // @Produce json
 // @Param order_id path int true "Order ID to be updated"
 // @Param status body data true "New status for the order"

@@ -11,7 +11,7 @@ import (
 
 // @Summary Process a COD order
 // @Description Process a cash-on-delivery (COD) order and create payment, order, and order items
-// @Tags Orders
+// @Tags COD
 // @Accept json
 // @Produce json
 // @Param order body models.Order true "Order object with Address_ID"

@@ -860,7 +860,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "users"
+                    "profile"
                 ],
                 "summary": "Change Password",
                 "parameters": [
@@ -906,7 +906,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Orders"
+                    "COD"
                 ],
                 "summary": "Process a COD order",
                 "parameters": [
@@ -1466,6 +1466,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "razor pay"
+                ],
                 "summary": "Process RazorPay Success",
                 "operationId": "RazorPaySuccess",
                 "parameters": [
@@ -1524,6 +1527,9 @@ const docTemplate = `{
                 "description": "Initiates a payment process through Razorpay for the authenticated user.",
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "razor pay"
                 ],
                 "summary": "Initiate RazorPay Payment",
                 "operationId": "RazorPay",
@@ -1653,6 +1659,9 @@ const docTemplate = `{
                 "produces": [
                     "text/html"
                 ],
+                "tags": [
+                    "razor pay"
+                ],
                 "summary": "Payment Success",
                 "operationId": "Success",
                 "parameters": [
@@ -1695,7 +1704,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "users"
+                    "profile"
                 ],
                 "summary": "Update Profile",
                 "parameters": [
@@ -1743,7 +1752,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "users"
+                    "profile"
                 ],
                 "summary": "Get User Details",
                 "responses": {

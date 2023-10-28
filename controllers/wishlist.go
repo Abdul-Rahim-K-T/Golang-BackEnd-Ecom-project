@@ -16,6 +16,7 @@ type datas struct {
 
 // AddToWishtList allows the authenticated user to add a product to their wishlist.
 // @Summary Add to Wishlist
+// Tags Wishlist
 // @Description Allows the authenticated user to add a product to their wishlist.
 // @ID AddToWishlist
 // @Accept json
@@ -69,6 +70,7 @@ func AddToWishtList(c *gin.Context) {
 
 // ListWishlist retrieves the authenticated user's wishlist items.
 // @Summary List Wishlist
+// Tags Wishlist
 // @Description Retrieves the authenticated user's wishlist items.
 // @ID ListWishlist
 // @Produce json
@@ -106,14 +108,15 @@ func ListWishlist(c *gin.Context) {
 	})
 }
 
-type carts1 struct {
-	Wishlist_ID uint `json:"wishlistid"`
-	Quantity    uint `json:"quantity"`
-}
+// type carts1 struct {
+// 	Wishlist_ID uint `json:"wishlistid"`
+// 	Quantity    uint `json:"quantity"`
+// }
 
 /// AddToCartFromWishlist adds a product from the user's wishlist to the cart.
 // @Summary Add to Cart from Wishlist
 // @Description Adds a product from the user's wishlist to the cart.
+// Tags Wishlist
 // @ID AddToCartFromWishlist
 // @Accept json
 // @Produce json
@@ -208,6 +211,7 @@ func AddToCartFromWishlist(c *gin.Context) {
 // RemoveFromWishlist removes a product from the user's wishlist.
 // @Summary Remove from Wishlist
 // @Description Removes a product from the user's wishlist.
+// Tags Wishlist
 // @ID RemoveFromWishlist
 // @Param wishlist_id path int true "Wishlist item ID"
 // @Success 200 {json} SuccesResponse "Product successfully removed from wishlist."
