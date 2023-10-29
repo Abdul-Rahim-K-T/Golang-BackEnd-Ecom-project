@@ -15,12 +15,12 @@ import (
 //@version 1.0
 //@discription Ecom API in go using Gin frame work
 
-// @host     localhost:hensta.online
+// @host     hensta.online
 // @BasePath/
 func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "hensta.online"
+		port = "8080"
 	}
 	database.InitDB()
 
