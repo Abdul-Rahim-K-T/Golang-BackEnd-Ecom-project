@@ -32,6 +32,6 @@ func main() {
 	routes.AdminRoutes(router)
 	//add swagger
 	router.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	// test
+	// test lkjahgthlahdtklj
 	router.Run(":" + port)
 }
